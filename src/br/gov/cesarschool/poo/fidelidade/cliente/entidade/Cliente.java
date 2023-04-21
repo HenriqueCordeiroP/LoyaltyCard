@@ -8,7 +8,8 @@ import br.gov.cesarschool.poo.fidelidade.geral.entidade.Sexo;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class Cliente { // implements Serializable
+public class Cliente implements Serializable { 
+	private static final long serialVersionUID = 1L;
 	private String cpf;
 	private String nomeCompleto;		
 	private Sexo sexo;

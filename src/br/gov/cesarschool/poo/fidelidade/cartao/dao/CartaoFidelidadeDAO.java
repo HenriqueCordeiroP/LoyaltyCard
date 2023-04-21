@@ -15,7 +15,7 @@ import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
 public class CartaoFidelidadeDAO {
 	private static final String FILE_SEP = System.getProperty("file.separator");
 	private static final String DIR_BASE = "." + FILE_SEP + "banco" + FILE_SEP 
-			+ "cartaofidelidade" + FILE_SEP; 
+			+ "fidelidade" + FILE_SEP; 
 	private static final String EXT = ".dat";
 	public CartaoFidelidadeDAO() {
 		File diretorio = new File(DIR_BASE);
@@ -27,7 +27,8 @@ public class CartaoFidelidadeDAO {
 		String nomeArq = DIR_BASE + cpf + EXT;
 		return new File(nomeArq);		
 	}
-	private void incluirAux(CartaoFidelidade cartaofidelidade, File arq) {
+	private void incluirAux(CartaoFidelidade cartaofidelidade) {
+		File arq = getArquivo("" + cartaofidelidade.getNumero());
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
@@ -50,7 +51,7 @@ public class CartaoFidelidadeDAO {
 		if (arq.exists()) {
 			return false; 
 		}
-		incluirAux(cartaofidelidade, arq);
+		incluirAux(cartaofidelidade);
 		return true; 
 	}
 	public boolean alterar(CartaoFidelidade cartaofidelidade) {
@@ -61,7 +62,7 @@ public class CartaoFidelidadeDAO {
 		if (!arq.delete()) {
 			return false;
 		}
-		incluirAux(cartaofidelidade, arq);
+		incluirAux(cartaofidelidade);
 		return true;
 	}
 	public CartaoFidelidade buscar(long numero) {

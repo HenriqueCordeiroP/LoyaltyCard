@@ -2,10 +2,15 @@ package br.gov.cesarschool.poo.fidelidade.cartao.negocio;
 
 import br.gov.cesarschool.poo.fidelidade.cartao.dao.CartaoFidelidadeDAO;
 import br.gov.cesarschool.poo.fidelidade.cartao.dao.LancamentoExtratoDAO;
+import br.gov.cesarschool.poo.fidelidade.cartao.entidade.CartaoFidelidade;
+import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoPontuacao;
+import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoResgate;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.TipoResgate;
 import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CartaoFidelidadeMediator {
 	private CartaoFidelidadeDAO repositorioCartao;
@@ -28,9 +33,15 @@ public class CartaoFidelidadeMediator {
 		String cpf = cliente.getCpf();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(cliente.getDataDeNascimento());
-		String cartao = cpf +  cal.get(Calendar.YEAR) + 
+		String numCartaoStr = cpf +  cal.get(Calendar.YEAR) + 
 				getMonth(cal) + getDay(cal);
-		return Long.parseLong(cartao);
+		long numCartao = Long.parseLong(numCartaoStr);
+		CartaoFidelidade cartao = new CartaoFidelidade(numCartao); 
+		boolean resultIncluirCartao = repositorioCartao.incluir(cartao);
+		if(resultIncluirCartao == true) {
+			return numCartao;
+		}
+		return 0L;
 	}
 	
 	private String getMonth(Calendar cal) {
@@ -51,12 +62,40 @@ public class CartaoFidelidadeMediator {
 	
 	public String pontuar(long numeroCartao, double quantidadePontos) {
 		if(quantidadePontos <= 0) {
-			return "Error message";
+			return "QUANTIDADE INVALIDA DE PONTOS";
 		}
+		CartaoFidelidade cartao = repositorioCartao.buscar(numeroCartao);
+		if (cartao == null) {
+			return "CARTAO NAO ENCONTRADO";
+		}
+		cartao.creditar(quantidadePontos);
+		repositorioCartao.alterar(cartao);
+		Date dataHoraLancamento = new Date();
+		LocalDateTime dataHoraConvertido = dataHoraLancamento.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		int qtdPontosInt = (int) quantidadePontos; // pode perder informação
+		LancamentoExtratoPontuacao lancamento = new LancamentoExtratoPontuacao(cartao.getNumero(), qtdPontosInt, dataHoraConvertido );
+		repositorioLancamento.incluir(lancamento);
 		return null;
 	}
 	
 	public String resgatar(long numeroCartao, double quantidadePontos, TipoResgate tipo) {
+		if(quantidadePontos <= 0) {
+			return "QUANTIDADE INVALIDA DE PONTOS";
+		}
+		CartaoFidelidade cartao = repositorioCartao.buscar(numeroCartao);
+		if(cartao == null) {
+			return "CARTAO NAO ENCONTRADO";
+		}
+		if(cartao.getSaldo() < quantidadePontos) {
+			return "SALDO INSUFICIENTE";
+		}
+		cartao.debitar(quantidadePontos);
+		repositorioCartao.alterar(cartao);
+		Date dataHoraLancamento = new Date();
+		LocalDateTime dataHoraConvertido = dataHoraLancamento.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		int qtdPontosInt = (int) quantidadePontos; // pode perder informação
+		LancamentoExtratoResgate lancamento = new LancamentoExtratoResgate(numeroCartao, qtdPontosInt, dataHoraConvertido, tipo);
+		repositorioLancamento.incluir(lancamento);
 		return null;
 	}
 	

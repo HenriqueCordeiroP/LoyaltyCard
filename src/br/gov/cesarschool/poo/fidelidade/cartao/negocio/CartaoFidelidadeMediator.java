@@ -30,7 +30,8 @@ public class CartaoFidelidadeMediator {
 	}
 	
 	public long gerarCartao(Cliente cliente) {
-		String cpf = cliente.getCpf();
+		String oldCpf = cliente.getCpf();
+		String cpf = oldCpf.substring(0, oldCpf.length() - 2); 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(cliente.getDataDeNascimento());
 		String numCartaoStr = cpf +  cal.get(Calendar.YEAR) + 

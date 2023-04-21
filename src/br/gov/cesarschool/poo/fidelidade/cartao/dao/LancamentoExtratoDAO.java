@@ -23,7 +23,7 @@ public class LancamentoExtratoDAO {
 		}
 	}
 												// acho que deixa de receber numeroCartao
-	private File getArquivo(String tipoLancamento, long numeroCartao) { // retorna file ou string?
+	private File getArquivo(String tipoLancamento, long numeroCartao) { 
 		String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		String idLancamento = tipoLancamento + numeroCartao + timestamp; 
 		String nomeArq = DIR_BASE + idLancamento + EXT;
@@ -33,7 +33,7 @@ public class LancamentoExtratoDAO {
 	private void incluirAux(LancamentoExtrato lancamento, String tipo) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
-		 File arq = getArquivo(tipo, lancamento.getNumeroCartao());
+		File arq = getArquivo(tipo, lancamento.getNumeroCartao());
 		try {
 			fos = new FileOutputStream(arq);
 			oos = new ObjectOutputStream(fos);

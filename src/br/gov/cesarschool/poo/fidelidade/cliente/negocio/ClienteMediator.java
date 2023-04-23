@@ -53,7 +53,7 @@ public class ClienteMediator {
 			return resultValidar;
 		}
 		if(repositorioCliente.buscar(cliente.getCpf()) == null){
-			return "Cliente não encontrado.";
+			return "CLIENTE NAO ENCONTRADO";
 		} 
 		
 		repositorioCliente.alterar(cliente); 
@@ -63,19 +63,19 @@ public class ClienteMediator {
 	private String validar(Cliente cliente) {
 		Date today = new Date();
 		if(!ValidadorCPF.ehCpfValido(cliente.getCpf())) {
-			return "CPF inválido.";
+			return "CPF INVALIDO";
 		}
-		if(!StringUtil.ehNuloOuBranco(cliente.getNomeCompleto())) {
-			return "Nome inválido.";
+		if(StringUtil.ehNuloOuBranco(cliente.getNomeCompleto())) {
+			return "NOME INVALIDO";
 		}
 		if(!cliente.getDataDeNascimento().before(today)) {
-			return "Data de nascimento inválida.";
+			return "DATA DE NASCIMENTO INVALIDA";
 		}
 		if(cliente.obterIdade() < 18) {
-			return "Idade insuficiente.";
+			return "IDADE INSUFICIENTE";
 		}
 		if(cliente.getRenda() < 0) {
-			return "Renda insuficiente.";
+			return "RENDA INSUFICIENTE";
 		}
 		String resultEndereco = validarEndereco(cliente.getEndereco());
 		if(resultEndereco != null) {
@@ -87,19 +87,19 @@ public class ClienteMediator {
 	
 	private String validarEndereco(Endereco endereco) {
 		if(endereco.getLogradouro().length() < 4 || StringUtil.ehNuloOuBranco(endereco.getLogradouro())) {
-			return "Logradouro inválido.";
+			return "LOGRADOURO INVALIDO";
 		}
-		if(endereco.getNumero() >= 0 ) {
-			return "Número inválido.";
+		if(endereco.getNumero() <= 0 ) {
+			return "NUMERO INVALIDO";
 		}
 		if(StringUtil.ehNuloOuBranco(endereco.getCidade())) {
-			return "Cidade inválida.";
+			return "CIDADE INVALIDA";
 		}
 		if(StringUtil.ehNuloOuBranco(endereco.getEstado())) {
-			return "Estado inválido.";
+			return "ESTADO INVALIDO";
 		}
 		if(StringUtil.ehNuloOuBranco(endereco.getPais())){
-			return "País inválido.";
+			return "PAIS INVALIDO";
 		}
 		return null;
 	

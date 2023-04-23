@@ -350,6 +350,16 @@ public class TelaManutencaoCliente {
 					return;
 				}
 				
+				int i = 0;
+				while(i<rendaStr.length()) {
+					if(!Character.isDigit(rendaStr.charAt(i))){
+						labelErro.setVisible(true);
+						labelErro.setText("Formato do campo 'Renda' inválido!");
+						return;
+					}
+					i++;
+				}
+				
 				
 				Date dataDeNascimento = criarData(nome_data_nascimento);
 				Double renda = Double.parseDouble(rendaStr);

@@ -1,9 +1,9 @@
 package br.gov.cesarschool.poo.fidelidade.cartao.entidade;
 
 public enum TipoResgate {
-	PRODUTO(1, "Produto"),
-	SERVICO(2, "Servico"),
-	VIAGEM(3, "Viagem");
+	PRODUTO(0, "Produto"),
+	SERVICO(1, "Servico"),
+	VIAGEM(2, "Viagem");
 	
 	private int codigo;
 	private String descricao;
@@ -22,7 +22,7 @@ public enum TipoResgate {
 		return descricao;
 	}
 	
-	public TipoResgate obterPorCodigo(int codigo) {
+	public static TipoResgate obterPorCodigo(int codigo) {
 		TipoResgate[] opcoes = TipoResgate.values();
 		for(TipoResgate tipoResgate : opcoes) {
 			if(codigo == tipoResgate.getCodigo()) {

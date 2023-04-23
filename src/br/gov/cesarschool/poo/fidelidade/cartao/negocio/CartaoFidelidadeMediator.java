@@ -48,9 +48,9 @@ public class CartaoFidelidadeMediator {
 	private String getMonth(Calendar cal) {
 		int month = cal.get(Calendar.MONTH);
 		if(month < 10) {
-			return "0" + (month + 1);
+			return "0" + (month);
 		}
-		return "" + (month + 1);
+		return "" + (month);
 	}
 	
 	private String getDay(Calendar cal) {
@@ -63,11 +63,11 @@ public class CartaoFidelidadeMediator {
 	
 	public String pontuar(long numeroCartao, double quantidadePontos) {
 		if(quantidadePontos <= 0) {
-			return "QUANTIDADE INVALIDA DE PONTOS";
+			return "Quantidade inválida de pontos.";
 		}
 		CartaoFidelidade cartao = repositorioCartao.buscar(numeroCartao);
 		if (cartao == null) {
-			return "CARTAO NAO ENCONTRADO";
+			return "Cartão não encontrado.";
 		}
 		cartao.creditar(quantidadePontos);
 		repositorioCartao.alterar(cartao);
@@ -81,14 +81,14 @@ public class CartaoFidelidadeMediator {
 	
 	public String resgatar(long numeroCartao, double quantidadePontos, TipoResgate tipo) {
 		if(quantidadePontos <= 0) {
-			return "QUANTIDADE INVALIDA DE PONTOS";
+			return "Quantidade inválida de pontos.";
 		}
 		CartaoFidelidade cartao = repositorioCartao.buscar(numeroCartao);
 		if(cartao == null) {
-			return "CARTAO NAO ENCONTRADO";
+			return "Cartão não encontrado.";
 		}
 		if(cartao.getSaldo() < quantidadePontos) {
-			return "SALDO INSUFICIENTE";
+			return "Saldo Insuficiente.";
 		}
 		cartao.debitar(quantidadePontos);
 		repositorioCartao.alterar(cartao);
@@ -100,5 +100,8 @@ public class CartaoFidelidadeMediator {
 		return null;
 	}
 	
+	public CartaoFidelidade buscar(long numero) {
+		return repositorioCartao.buscar(numero);
+	}
 	
 }

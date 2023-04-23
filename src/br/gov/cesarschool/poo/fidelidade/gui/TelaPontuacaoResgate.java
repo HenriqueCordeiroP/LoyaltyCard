@@ -39,6 +39,10 @@ public class TelaPontuacaoResgate {
 	private Label lblValor;
 	private Button btnPontuarResgatar;
 	private Button btnVoltar;
+	private char op;
+	private long numeroLong;
+	private CartaoFidelidadeMediator mediator = CartaoFidelidadeMediator.getInstance();
+	private TipoResgate tipoResgate;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -96,11 +100,6 @@ public class TelaPontuacaoResgate {
 		
 		Button btnPontuacao = new Button(shell, SWT.RADIO);
 		this.btnPontuacao = btnPontuacao;
-		btnPontuacao.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
 		btnPontuacao.setBounds(193, 83, 90, 16);
 		btnPontuacao.setText("Pontuação");
 		
@@ -140,12 +139,71 @@ public class TelaPontuacaoResgate {
 		txtValor.setBounds(193, 248, 76, 21);
 		
 		Button btnPontuarResgatar = new Button(shell, SWT.NONE);
+		btnPontuarResgatar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if(op == 'R') {
+					double valor;
+					int indexResgate = cmbTipoResgate.getSelectionIndex();
+					if(indexResgate == -1 ) {
+						JOptionPane.showMessageDialog(null, "Selecione um tipo válido para o resgate.");
+						return;
+					}
+					
+					tipoResgate = TipoResgate.obterPorCodigo(indexResgate); 
+					
+					String valorStr = txtValor.getText();
+					if(StringUtil.ehNuloOuBranco(valorStr)) {
+						JOptionPane.showMessageDialog(null, "Valor Inválido");
+						return;
+					} 
+					try {
+						valor = Double.parseDouble(txtValor.getText());
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Valor inválido.");
+						return;
+					}
+
+					
+					String resultResgatar = mediator.resgatar(numeroLong, valor, tipoResgate);
+					if(resultResgatar != null) {
+						JOptionPane.showMessageDialog(null, resultResgatar);
+						return;
+					}
+				}
+				if(op == 'P') {
+					double valor;
+					
+					String valorStr = txtValor.getText();
+					if(StringUtil.ehNuloOuBranco(valorStr)) {
+						JOptionPane.showMessageDialog(null, "Valor Inválido");
+						return;
+					} 
+					try {
+						valor = Double.parseDouble(txtValor.getText());
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Valor inválido.");
+						return;
+					}
+
+					
+					String resultResgatar = mediator.resgatar(numeroLong, valor, tipoResgate);
+					if(resultResgatar != null) {
+						JOptionPane.showMessageDialog(null, resultResgatar);
+						return;
+					}
+
+				}
+			}
+		});
 		btnPontuarResgatar.setEnabled(false);
 		this.btnPontuarResgatar = btnPontuarResgatar;
 		btnPontuarResgatar.setBounds(193, 295, 115, 25);
-		btnPontuarResgatar.setText("Pontuar / Resgatar");
+		btnPontuarResgatar.setText(" ");
 		
 		Button btnVoltar = new Button(shell, SWT.NONE);
+		btnVoltar.setEnabled(false);
+		this.btnVoltar = btnVoltar;
 		btnVoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
@@ -159,67 +217,69 @@ public class TelaPontuacaoResgate {
 				txtValor.setText("");
 				txtValor.setEnabled(false);
 				btnPontuarResgatar.setEnabled(false);
+				enableSearch();				
 				
 			}
 		});
-		this.btnVoltar = btnVoltar;
 		btnVoltar.setBounds(406, 295, 75, 25);
 		btnVoltar.setText("Voltar");
 		btnBuscar.addMouseListener(new MouseAdapter() {
-			
 			@Override
 			public void mouseDown(MouseEvent e) {
-				CartaoFidelidadeMediator mediator = CartaoFidelidadeMediator.getInstance();
 				String numero = txtNumeroCartao.getText();
-				char op;
 				
 				if(StringUtil.ehNuloOuBranco(numero)) {
 					JOptionPane.showMessageDialog(null, "Insira o número do cartão.");
 					return;
 				}
 				
-				if(btnResgate.getSelection() == false
-						&& btnPontuacao.getSelection() == false) {
+				if(btnResgate.getSelection() == false && btnPontuacao.getSelection() == false) {
 					JOptionPane.showMessageDialog(null, "Selecione uma operação.");
 					return;
 				} else {
 					op = btnResgate.getSelection() == true ? 'R' : 'P';
 				}
 				
-				long numeroLong = Long.parseLong(numero);
+				try {
+					numeroLong = Long.parseLong(numero);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Número de cartão inválido");
+					return;
+				}
+				
+				CartaoFidelidade cartao = mediator.buscar(numeroLong);
+				if(cartao == null) {
+					JOptionPane.showMessageDialog(null, "Cartão não encontrado.");
+					return;
+				}
+				
+				disableSearch();
 				btnPontuarResgatar.setEnabled(true);
 				txtSaldo.setEnabled(true);
-				txtSaldo.setText("???");
+				txtSaldo.setText("" + cartao.getSaldo());
 				txtValor.setEnabled(true);
-				cmbTipoResgate.setEnabled(true);
-				
+				btnVoltar.setEnabled(true);
 				if(op == 'R') {
-					double valor;
-					TipoResgate tipoResgate;
-					int indexResgate = cmbTipoResgate.getSelectionIndex();
-					
-					if(indexResgate == -1) {
-						JOptionPane.showMessageDialog(null, "Selecione um tipo de resgate.");
-						return;
-					} else {						
-					tipoResgate = TipoResgate.obterPorCodigo(indexResgate); 
-					}
-					
-					String valorStr = txtValor.getText();
-					if(StringUtil.ehNuloOuBranco(valorStr)) {
-						JOptionPane.showMessageDialog(null, "Valor Inválido");
-						return;
-					}else { 
-						valor = Double.parseDouble(txtValor.getText());
-					}
-					
-					String resultResgatar = mediator.resgatar(numeroLong, valor, tipoResgate);
-					if(resultResgatar != null) {
-						JOptionPane.showMessageDialog(null, resultResgatar);
-						return;
-					}
+					btnPontuarResgatar.setText("Resgatar");
+					cmbTipoResgate.setEnabled(true);
+				}
+				if(op == 'P') {
+					btnPontuarResgatar.setText("Pontuar");
 				}
 			}
 		});
+	}
+	
+	private void disableSearch() {
+		txtNumeroCartao.setEnabled(false);
+		btnPontuacao.setEnabled(false);
+		btnResgate.setEnabled(false);
+		btnBuscar.setEnabled(false);
+	}
+	private void enableSearch() {
+		txtNumeroCartao.setEnabled(true);
+		btnPontuacao.setEnabled(true);
+		btnResgate.setEnabled(true);
+		btnBuscar.setEnabled(true);
 	}
 }

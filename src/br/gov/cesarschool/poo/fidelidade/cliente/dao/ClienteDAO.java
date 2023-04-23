@@ -22,8 +22,7 @@ public class ClienteDAO {
 		String nomeArq = DIR_BASE + cpf + EXT;
 		return new File(nomeArq);		
 	}
-	private void incluirAux(Cliente cliente) {
-		File arq = getArquivo(cliente.getCpf());
+	private void incluirAux(Cliente cliente, File arq) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
@@ -46,7 +45,7 @@ public class ClienteDAO {
 		if (arq.exists()) {
 			return false; 
 		}
-		incluirAux(cliente);
+		incluirAux(cliente, arq);
 		return true; 
 	}
 	public boolean alterar(Cliente cliente) {
@@ -57,7 +56,7 @@ public class ClienteDAO {
 		if (!arq.delete()) {
 			return false;
 		}
-		incluirAux(cliente);
+		incluirAux(cliente, arq);
 		return true;
 	}
 	public Cliente buscar(String cpf) {

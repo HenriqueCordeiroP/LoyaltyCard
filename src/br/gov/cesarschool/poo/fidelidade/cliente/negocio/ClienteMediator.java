@@ -26,6 +26,16 @@ public class ClienteMediator {
 		return instance;
 	}
 	
+	public Cliente buscarCPF(String CPF) {
+		Cliente retorno = repositorioCliente.buscar(CPF);
+		if(retorno == null) {
+			return null;
+		}
+		else {
+			return retorno;
+		}
+	}
+	
 	public ResultadoInclusaoCliente incluir(Cliente cliente) {
 		String resultValidar = validar(cliente);
 		long numeroCartao = 0;

@@ -1,5 +1,7 @@
 package br.gov.cesarschool.poo.fidelidade.gui;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -42,7 +44,12 @@ public class TelaPontuacaoResgate {
 		shell = new Shell();
 		shell.setSize(450, 300);
 		shell.setText("SWT Application");
+		
+		Button btnCheckButton = new Button(shell, SWT.CHECK);
+		btnCheckButton.setBounds(50, 111, 93, 16);
+		btnCheckButton.setText("Check Button");
 
 	}
+	
 
 }

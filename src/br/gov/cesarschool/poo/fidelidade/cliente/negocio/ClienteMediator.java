@@ -26,6 +26,16 @@ public class ClienteMediator {
 		return instance;
 	}
 	
+	public Cliente buscarCPF(String CPF) {
+		Cliente retorno = repositorioCliente.buscar(CPF);
+		if(retorno == null) {
+			return null;
+		}
+		else {
+			return retorno;
+		}
+	}
+	
 	public ResultadoInclusaoCliente incluir(Cliente cliente) {
 		String resultValidar = validar(cliente);
 		long numeroCartao = 0;
@@ -55,7 +65,7 @@ public class ClienteMediator {
 		if(!ValidadorCPF.ehCpfValido(cliente.getCpf())) {
 			return "CPF INVALIDO";
 		}
-		if(!StringUtil.ehNuloOuBranco(cliente.getNomeCompleto())) {
+		if(StringUtil.ehNuloOuBranco(cliente.getNomeCompleto())) {
 			return "NOME INVALIDO";
 		}
 		if(!cliente.getDataDeNascimento().before(today)) {
@@ -79,7 +89,7 @@ public class ClienteMediator {
 		if(endereco.getLogradouro().length() < 4 || StringUtil.ehNuloOuBranco(endereco.getLogradouro())) {
 			return "LOGRADOURO INVALIDO";
 		}
-		if(endereco.getNumero() >= 0 ) {
+		if(endereco.getNumero() <= 0 ) {
 			return "NUMERO INVALIDO";
 		}
 		if(StringUtil.ehNuloOuBranco(endereco.getCidade())) {

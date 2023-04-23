@@ -23,8 +23,8 @@ public class CartaoFidelidadeDAO {
 			diretorio.mkdir();
 		}
 	}
-	private File getArquivo(String cpf) {
-		String nomeArq = DIR_BASE + cpf + EXT;
+	private File getArquivo(String numero) {
+		String nomeArq = DIR_BASE + numero + EXT;
 		return new File(nomeArq);		
 	}
 	private void incluirAux(CartaoFidelidade cartaofidelidade) {
@@ -47,7 +47,7 @@ public class CartaoFidelidadeDAO {
 		} 		
 	}
 	public boolean incluir(CartaoFidelidade cartaofidelidade) {
-		File arq = getArquivo(cartaofidelidade.getNumero() + "");
+		File arq = getArquivo("" + cartaofidelidade.getNumero() );
 		if (arq.exists()) {
 			return false; 
 		}

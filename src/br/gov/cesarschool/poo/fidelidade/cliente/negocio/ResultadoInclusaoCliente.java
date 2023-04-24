@@ -1,6 +1,6 @@
 package br.gov.cesarschool.poo.fidelidade.cliente.negocio;
 
-public class ResultadoInclusaoCliente {
+public class ResultadoInclusaoCliente{
 	private long numeroFidelidade;
 	private String mensagemErroValidacao;
 	

@@ -1,6 +1,8 @@
 package br.gov.cesarschool.poo.fidelidade.cartao.entidade;
 
-public enum TipoResgate {
+import java.io.Serializable;
+
+public enum TipoResgate implements Serializable{
 	PRODUTO(0, "Produto"),
 	SERVICO(1, "Servico"),
 	VIAGEM(2, "Viagem");

@@ -7,15 +7,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.CartaoFidelidade;
-import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
 
 /* Apesar de não acusar erros no código, não sei se a lógica está correta
  * vale uma revisão com o prof
  */
 public class CartaoFidelidadeDAO {
 	private static final String FILE_SEP = System.getProperty("file.separator");
-	private static final String DIR_BASE = "." + FILE_SEP + "banco" + FILE_SEP 
-			+ "fidelidade" + FILE_SEP; 
+	private static final String DIR_BASE = "." + FILE_SEP + "fidelidade" + FILE_SEP 
+			+ "cartao" + FILE_SEP; 
 	private static final String EXT = ".dat";
 	public CartaoFidelidadeDAO() {
 		File diretorio = new File(DIR_BASE);

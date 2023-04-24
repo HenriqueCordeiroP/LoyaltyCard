@@ -172,6 +172,9 @@ public class TelaPontuacaoResgate {
 						JOptionPane.showMessageDialog(null, resultResgatar);
 						return;
 					}
+					JOptionPane.showMessageDialog(null, "Resgatado com sucesso!");
+					return;
+
 				}
 				if(op == 'P') {
 					double valor;
@@ -189,12 +192,13 @@ public class TelaPontuacaoResgate {
 					}
 
 					
-					String resultResgatar = mediator.resgatar(numeroLong, valor, tipoResgate);
-					if(resultResgatar != null) {
-						JOptionPane.showMessageDialog(null, resultResgatar);
+					String resultPontuar = mediator.pontuar(numeroLong, valor);
+					if(resultPontuar != null) {
+						JOptionPane.showMessageDialog(null, resultPontuar);
 						return;
 					}
-
+					JOptionPane.showMessageDialog(null, "Pontuado com sucesso!");
+					return;
 				}
 			}
 		});

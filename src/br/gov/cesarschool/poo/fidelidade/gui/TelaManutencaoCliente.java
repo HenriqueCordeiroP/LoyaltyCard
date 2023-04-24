@@ -352,12 +352,12 @@ public class TelaManutencaoCliente {
 				
 				int i = 0;
 				while(i<rendaStr.length()) {
-					if(!Character.isDigit(rendaStr.charAt(i))){
+					if(!Character.isDigit(rendaStr.charAt(i)) && rendaStr.charAt(i) != '.'){
 						labelErro.setVisible(true);
 						labelErro.setText("Formato do campo 'Renda' inválido!");
 						return;
 					}
-					i++;
+					i++;	
 				}
 				
 				

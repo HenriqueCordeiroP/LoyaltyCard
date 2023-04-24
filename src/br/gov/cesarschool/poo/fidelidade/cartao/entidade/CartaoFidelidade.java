@@ -1,8 +1,9 @@
 package br.gov.cesarschool.poo.fidelidade.cartao.entidade;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CartaoFidelidade {
+public class CartaoFidelidade implements Serializable{
 	private long numero;
 	private double saldo;
 	private Date dataHoraAtualizacao = new Date();

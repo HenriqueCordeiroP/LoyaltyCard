@@ -22,9 +22,8 @@ public class LancamentoExtratoDAO {
 			diretorio.mkdir();
 		}
 	}
-												// acho que deixa de receber numeroCartao
 	private File getArquivo(String tipoLancamento, long numeroCartao) { 
-		String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace("-", "").replace(":", "").replace(".", "").replace("T", "");
 		String idLancamento = tipoLancamento + numeroCartao + timestamp; 
 		String nomeArq = DIR_BASE + idLancamento + EXT;
 		return new File(nomeArq);		

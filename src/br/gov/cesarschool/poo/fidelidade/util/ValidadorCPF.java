@@ -1,6 +1,8 @@
 package br.gov.cesarschool.poo.fidelidade.util;
 
-public class ValidadorCPF {
+import java.io.Serializable;
+
+public class ValidadorCPF implements Serializable{
 	public static boolean ehCpfValido(String cpf) {
 		
 		boolean isValid = true;

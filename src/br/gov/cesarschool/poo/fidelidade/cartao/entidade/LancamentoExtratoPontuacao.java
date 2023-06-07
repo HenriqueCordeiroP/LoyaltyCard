@@ -8,5 +8,8 @@ public class LancamentoExtratoPontuacao extends LancamentoExtrato implements Ser
 	public LancamentoExtratoPontuacao(long numeroCartao, int quantidadePontos, LocalDateTime dataHoraLancamento) {
 		super(numeroCartao, quantidadePontos, dataHoraLancamento);
 	}
-
-}
+	
+	public String getIdentificadorTipo() {
+		return "P";
+	}
+}	

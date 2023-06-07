@@ -3,7 +3,10 @@ package br.gov.cesarschool.poo.fidelidade.cartao.entidade;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class LancamentoExtrato implements Serializable{
+import br.gov.cesarschool.poo.fidelidade.geral.entidade.Comparavel;
+import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
+
+public abstract class LancamentoExtrato extends Identificavel implements Serializable, Comparavel{
 	private long numeroCartao;
 	private int quantidadePontos;
 	private LocalDateTime dataHoraLancamento;
@@ -26,6 +29,14 @@ public class LancamentoExtrato implements Serializable{
 		return dataHoraLancamento;
 	}
 	
+	public String obterChave() {
+		return "" + numeroCartao;
+	}
 	
+	public int comparar(Comparavel comp) {
+		LancamentoExtrato comparado = (LancamentoExtrato) comp;
+		return dataHoraLancamento.compareTo(comparado.getDataHoraLancamento());
+	}
 	
+	public abstract String getIdentificadorTipo();
 }

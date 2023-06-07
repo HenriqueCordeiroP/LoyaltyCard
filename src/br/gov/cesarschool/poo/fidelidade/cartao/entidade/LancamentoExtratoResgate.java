@@ -14,4 +14,8 @@ public class LancamentoExtratoResgate extends LancamentoExtrato implements Seria
 	public TipoResgate getTipoResgate() {
 		return tipoResgate;
 	}
+	
+	public String getIdentificadorTipo() {
+		return "R";
+	}
 }

@@ -65,7 +65,7 @@ public class CartaoFidelidadeMediator {
 		if(quantidadePontos <= 0) {
 			return "Quantidade inválida de pontos.";
 		}
-		CartaoFidelidade cartao = repositorioCartao.buscar(numeroCartao);
+		CartaoFidelidade cartao = repositorioCartao.buscar("" + numeroCartao);
 		if (cartao == null) {
 			return "Cartão não encontrado.";
 		}
@@ -83,7 +83,7 @@ public class CartaoFidelidadeMediator {
 		if(quantidadePontos <= 0) {
 			return "Quantidade inválida de pontos.";
 		}
-		CartaoFidelidade cartao = repositorioCartao.buscar(numeroCartao);
+		CartaoFidelidade cartao = repositorioCartao.buscar("" + numeroCartao);
 		if(cartao == null) {
 			return "Cartão não encontrado.";
 		}
@@ -101,7 +101,7 @@ public class CartaoFidelidadeMediator {
 	}
 	
 	public CartaoFidelidade buscar(long numero) {
-		return repositorioCartao.buscar(numero);
+		return repositorioCartao.buscar("" + numero);
 	}
 	
 }

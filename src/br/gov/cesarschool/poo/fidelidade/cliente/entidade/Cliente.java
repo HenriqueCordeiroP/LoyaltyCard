@@ -2,13 +2,15 @@ package br.gov.cesarschool.poo.fidelidade.cliente.entidade;
 
 import java.util.Date;
 
+import br.gov.cesarschool.poo.fidelidade.geral.entidade.Comparavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Endereco;
+import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Sexo;
 
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class Cliente implements Serializable { 
+public class Cliente extends Identificavel implements Comparavel { 
 	private String cpf;
 	private String nomeCompleto;		
 	private Sexo sexo;
@@ -79,8 +81,16 @@ public class Cliente implements Serializable {
 		int anoNascimento = calBirthDate.get(Calendar.YEAR);
 		Calendar calCurrent = Calendar.getInstance();
 		int anoAtual = calCurrent.get(Calendar.YEAR);
-		
 		return anoAtual - anoNascimento;
+	}
+	
+	public String obterChave() {
+		return cpf;
+	}
+	
+	public int comparar(Comparavel comp) {
+		Cliente comparado = (Cliente) comp;
+		return nomeCompleto.compareTo(comparado.getNomeCompleto());
 	}
 	
 }

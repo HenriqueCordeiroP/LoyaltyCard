@@ -362,6 +362,7 @@ public class TelaManutencaoCliente {
 				
 				
 				Date dataDeNascimento = criarData(nome_data_nascimento);
+				System.out.println(dataDeNascimento);
 				Double renda = Double.parseDouble(rendaStr);
 				Endereco endereco = criarEndereco(logradouro, numero, complemento, cep, cidade, estado);
 				
@@ -486,7 +487,8 @@ public class TelaManutencaoCliente {
 		int dia = Integer.parseInt(partes[0]);
 		int mes = Integer.parseInt(partes[1]);
 		int ano = Integer.parseInt(partes[2]);
-		return new Date(dia, mes, ano);
+		System.out.println("Dia " + dia + " Mes " + mes + " ano "+ ano);
+		return new Date(ano, mes, dia);
 	}
 	
 	boolean checkFormatDate(String data) {

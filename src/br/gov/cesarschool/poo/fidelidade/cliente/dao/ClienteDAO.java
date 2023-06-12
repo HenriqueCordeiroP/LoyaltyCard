@@ -1,5 +1,12 @@
 package br.gov.cesarschool.poo.fidelidade.cliente.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import java.util.Arrays;
+import java.util.Comparator;
+
 import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
 import br.gov.cesarschool.poo.fidelidade.geral.dao.DAOGenerico;
 
@@ -19,5 +26,9 @@ public class ClienteDAO {
 	}
 	public Cliente buscar(String cpf) {
 		return (Cliente) daoEncapsulado.buscar(cpf);
+	}
+	
+	public Cliente[] buscarTodos() {
+		return (Cliente[]) daoEncapsulado.buscarTodos();
 	}
 }

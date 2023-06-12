@@ -2,11 +2,13 @@ package br.gov.cesarschool.poo.fidelidade.geral.dao;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
+import br.gov.cesarschool.poo.fidelidade.util.Ordenador;
 
 public class DAOGenerico {
 	private String diretorioBase;
@@ -87,4 +89,28 @@ public class DAOGenerico {
 			} catch (Exception e) {}			
 		}
 	}
-}
+	
+	public Identificavel[] buscarTodos() {
+			File folder = new File(diretorioBase);
+			File[] files = folder.listFiles(); 
+			Identificavel[] result = new Identificavel[files.length];
+			int cont = 0;
+			FileInputStream fis = null; 
+			ObjectInputStream ois = null;
+			for(int i = 0 ; i < files.length ; i ++) {
+				File file = files[i];
+				if(file.isFile()) { 
+					try {
+					fis = new FileInputStream(file);
+					ois = new ObjectInputStream(fis);
+					result[cont] = (Identificavel)ois.readObject();
+					cont++;
+					} catch (Exception e) {
+						throw new RuntimeException("Erro ao ler");
+					}
+				}
+			}
+			return result;
+		}
+	}
+

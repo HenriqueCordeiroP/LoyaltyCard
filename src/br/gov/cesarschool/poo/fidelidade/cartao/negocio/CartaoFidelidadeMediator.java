@@ -1,16 +1,22 @@
 package br.gov.cesarschool.poo.fidelidade.cartao.negocio;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
 import br.gov.cesarschool.poo.fidelidade.cartao.dao.CartaoFidelidadeDAO;
 import br.gov.cesarschool.poo.fidelidade.cartao.dao.LancamentoExtratoDAO;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.CartaoFidelidade;
+import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtrato;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoPontuacao;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoResgate;
+import br.gov.cesarschool.poo.fidelidade.cartao.entidade.RetornoConsultaExtrato;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.TipoResgate;
 import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
+import br.gov.cesarschool.poo.fidelidade.util.Ordenador;
+import br.gov.cesarschool.poo.fidelidade.util.StringUtil;
 
 public class CartaoFidelidadeMediator {
 	private CartaoFidelidadeDAO repositorioCartao;
@@ -102,6 +108,35 @@ public class CartaoFidelidadeMediator {
 	
 	public CartaoFidelidade buscar(long numero) {
 		return repositorioCartao.buscar("" + numero);
+	}
+	
+	public RetornoConsultaExtrato consultaEntreDatas(String numeroCartao, LocalDateTime inicio, LocalDateTime fim) {
+		if(StringUtil.ehNuloOuBranco(numeroCartao) == true) {
+			return new RetornoConsultaExtrato(null, "Número do Cartão Inválido");
+		}
+		else if(inicio == null) {
+			return new RetornoConsultaExtrato(null, "Data de início inválida");
+		}
+		else if(!fim.isAfter(inicio)) {
+			return new RetornoConsultaExtrato(null, "Data de fim inválida");
+		}
+		LancamentoExtrato[] lancamentos = repositorioLancamento.buscarTodos();
+		int i = 0;
+		LancamentoExtrato[] temp = new LancamentoExtrato[lancamentos.length];
+		for(LancamentoExtrato lancamento : lancamentos) {
+			if (lancamento.getNumeroCartao() + "" == numeroCartao
+				&& lancamento.getDataHoraLancamento().isAfter(inicio) 
+				&& fim == null ? true : lancamento.getDataHoraLancamento().isBefore(fim)) {
+				temp[i] = lancamento;
+				i++;
+			}
+		}
+		LancamentoExtrato[] result = new LancamentoExtrato[i-1];
+		for(int j = 0 ; j < i ; j ++) {
+			result[j] = temp[i];
+		}
+		Ordenador.ordenar(result);
+		return new RetornoConsultaExtrato(result, null);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package br.gov.cesarschool.poo.fidelidade.cartao.dao;
 
+import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtrato;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoPontuacao;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoResgate;
 import br.gov.cesarschool.poo.fidelidade.geral.dao.DAOGenerico;
@@ -20,4 +21,8 @@ public class LancamentoExtratoDAO {
 	public boolean incluir(LancamentoExtratoResgate debito) {
 		return daoEncapsulado.incluir(debito);
 	}	
+	
+	public LancamentoExtrato[] buscarTodos() {
+		return (LancamentoExtrato[]) daoEncapsulado.buscarTodos();
+	}
 }

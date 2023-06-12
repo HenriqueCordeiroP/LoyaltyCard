@@ -5,6 +5,9 @@ import java.util.Date;
 
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
 
+import lombok.ToString;
+
+@ToString(exclude = "dataDeNascimento")
 public class CartaoFidelidade extends Identificavel{
 	private long numero;
 	private double saldo;

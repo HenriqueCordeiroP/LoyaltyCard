@@ -6,6 +6,7 @@ import br.gov.cesarschool.poo.fidelidade.cartao.negocio.CartaoFidelidadeMediator
 import br.gov.cesarschool.poo.fidelidade.cliente.dao.ClienteDAO;
 import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Endereco;
+import br.gov.cesarschool.poo.fidelidade.util.Ordenador;
 import br.gov.cesarschool.poo.fidelidade.util.StringUtil;
 import br.gov.cesarschool.poo.fidelidade.util.ValidadorCPF;
 
@@ -102,6 +103,11 @@ public class ClienteMediator {
 			return "País inválido.";
 		}
 		return null;
+	}
 	
+	public Cliente[] consultarClientesOrdenadosPorNome() {
+		Cliente[] clientes = repositorioCliente.buscarTodos();
+		Ordenador.ordenar(clientes);
+		return clientes;
 	}
 }

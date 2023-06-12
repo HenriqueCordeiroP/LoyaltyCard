@@ -1,15 +1,15 @@
 package br.gov.cesarschool.poo.fidelidade.cliente.entidade;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Comparavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Endereco;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Sexo;
+import lombok.ToString;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
+@ToString(exclude = "dataDeNascimento")
 public class Cliente extends Identificavel implements Comparavel { 
 	private String cpf;
 	private String nomeCompleto;		
@@ -22,7 +22,7 @@ public class Cliente extends Identificavel implements Comparavel {
 		this.cpf = cpf;
 		this.nomeCompleto = nomeCompleto;
 		this.sexo = sexo;
-		this.dataDeNascimento = dataDeNascimento;
+		this.dataDeNascimento = fixDate(dataDeNascimento);
 		this.renda = renda;
 		this.endereco = endereco;
 	}
@@ -91,6 +91,12 @@ public class Cliente extends Identificavel implements Comparavel {
 	public int comparar(Comparavel comp) {
 		Cliente comparado = (Cliente) comp;
 		return nomeCompleto.compareTo(comparado.getNomeCompleto());
+	}
+	
+	private Date fixDate(Date data) {
+		int newYear = data.getYear() - 1900;
+		Date novaData = new Date(newYear, data.getMonth(), data.getDate());
+		return novaData;
 	}
 	
 }

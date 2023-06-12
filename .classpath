@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="var" path="ECLIPSE_HOME"/>
 	<classpathentry kind="var" path="SWT_LIB"/>
+	<classpathentry kind="lib" path="C:/Users/RODRIGO/Downloads/lombok.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

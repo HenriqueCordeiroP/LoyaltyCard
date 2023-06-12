@@ -15,6 +15,7 @@ public class RelatorioExtrato {
 		RetornoConsultaExtrato consulta = mediator.consultaEntreDatas(numeroCartao, inicio, fim);
 		LancamentoExtrato[] extratos = consulta.getLancamentos();
 		DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+		decimalFormat.setMinimumFractionDigits(2);
 		for(LancamentoExtrato extrato : extratos) {
 			try {
 				LocalDateTime dataHora = extrato.getDataHoraLancamento();

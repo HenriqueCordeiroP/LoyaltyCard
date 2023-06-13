@@ -20,7 +20,11 @@ public class LancamentoExtratoDAO {
 	}
 	public boolean incluir(LancamentoExtratoResgate debito) {
 		return daoEncapsulado.incluir(debito);
-	}	
+	}
+	public boolean incluir(LancamentoExtrato debcred) {
+		return daoEncapsulado.incluir(debcred);
+	}
+	
 	
 	public LancamentoExtrato[] buscarTodos() {
 		return (LancamentoExtrato[]) daoEncapsulado.buscarTodos();

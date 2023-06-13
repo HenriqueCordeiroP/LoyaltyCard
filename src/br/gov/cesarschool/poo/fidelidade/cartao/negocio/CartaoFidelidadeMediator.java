@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.gov.cesarschool.fidelidade.geral.excecoes.ExcecaoDadoInvalido;
 import br.gov.cesarschool.poo.fidelidade.cartao.dao.CartaoFidelidadeDAO;
 import br.gov.cesarschool.poo.fidelidade.cartao.dao.LancamentoExtratoDAO;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.CartaoFidelidade;
@@ -110,15 +111,18 @@ public class CartaoFidelidadeMediator {
 		return repositorioCartao.buscar("" + numero);
 	}
 	
-	public RetornoConsultaExtrato consultaEntreDatas(String numeroCartao, LocalDateTime inicio, LocalDateTime fim) {
+	public RetornoConsultaExtrato consultaEntreDatas(String numeroCartao, LocalDateTime inicio, LocalDateTime fim) throws ExcecaoDadoInvalido {
 		if(StringUtil.ehNuloOuBranco(numeroCartao) == true) {
-			return new RetornoConsultaExtrato(null, "Número do Cartão Inválido");
+			//return new RetornoConsultaExtrato(null, "Número do Cartão Inválido");
+			throw new ExcecaoDadoInvalido("Número do Cartão Inválido");
 		}
 		else if(inicio == null) {
-			return new RetornoConsultaExtrato(null, "Data de início inválida");
+			//return new RetornoConsultaExtrato(null, "Data de início inválida");
+			throw new ExcecaoDadoInvalido("Data de início inválida");
 		}
 		else if(!fim.isAfter(inicio)) {
-			return new RetornoConsultaExtrato(null, "Data de fim inválida");
+			//return new RetornoConsultaExtrato(null, "Data de fim inválida");
+			throw new ExcecaoDadoInvalido("Data de fim inválida");
 		}
 		LancamentoExtrato[] lancamentos = repositorioLancamento.buscarTodos();
 		int i = 0;

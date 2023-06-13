@@ -1,7 +1,9 @@
 package br.gov.cesarschool.poo.fidelidade.geral.entidade;
 
 import java.io.Serializable;
+import lombok.ToString;
 
+@ToString
 public class Endereco implements Serializable{
     private String logradouro;
     private int numero;

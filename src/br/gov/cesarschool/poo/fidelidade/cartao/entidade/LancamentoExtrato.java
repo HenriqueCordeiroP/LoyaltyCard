@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Comparavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
+import lombok.ToString;
 
+@ToString
 public abstract class LancamentoExtrato extends Identificavel implements Serializable, Comparavel{
 	private long numeroCartao;
 	private int quantidadePontos;

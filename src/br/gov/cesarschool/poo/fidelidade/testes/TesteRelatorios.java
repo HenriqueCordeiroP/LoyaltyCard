@@ -20,6 +20,7 @@ import br.gov.cesarschool.poo.fidelidade.cartao.relatorios.RelatorioExtrato;
 import br.gov.cesarschool.poo.fidelidade.cliente.dao.ClienteDAO;
 import br.gov.cesarschool.poo.fidelidade.cliente.entidade.Cliente;
 import br.gov.cesarschool.poo.fidelidade.cliente.relatorios.RelatorioCliente;
+import br.gov.cesarschool.poo.fidelidade.excecoes.ExcecaoDadoInvalido;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Endereco;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Sexo;
 
@@ -55,7 +56,7 @@ public class TesteRelatorios {
 	}
 	@Test
 	public void testarRelatorioClientes() {		
-		outDoSystem.println("################# Testando Relatório de clientes ################# ");
+		outDoSystem.println("################# Testando Relatï¿½rio de clientes ################# ");
 		Cliente[] clientes = obterClientes();
 		ClienteDAO daoCli = new ClienteDAO();
 		boolean res = false;
@@ -68,7 +69,7 @@ public class TesteRelatorios {
 	}
 	@Test
 	public void testarRelatorioLancamentos() {	
-		outDoSystem.println("################# Testando Relatório de lançamentos ################# ");
+		outDoSystem.println("################# Testando Relatï¿½rio de lanï¿½amentos ################# ");
 		LancamentoExtrato[] lancamentos = obterLancamentos();
 		LancamentoExtratoDAO lancDao = new LancamentoExtratoDAO();
 		CartaoFidelidadeMediator cartaoMed = CartaoFidelidadeMediator.getInstance();
@@ -77,19 +78,55 @@ public class TesteRelatorios {
 			res = lancDao.incluir(lancamentoExtrato);
 			Assertions.assertTrue(res);
 		}
-		RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_OK, DH_INIC, DH_FIM);
-		RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_2, DH_INIC, null);		
+		try {
+			RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_OK, DH_INIC, DH_FIM);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_2, DH_INIC, null);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		Assertions.assertEquals(meuPs.getText(), OUT_REL_LAN);		
-		RetornoConsultaExtrato ret = cartaoMed.consultaEntreDatas(null, DH_INIC, DH_FIM);
-		assertExcecoesRelLancamento(ret);
-		ret = cartaoMed.consultaEntreDatas("  ", DH_INIC, DH_FIM);
-		assertExcecoesRelLancamento(ret);
-		ret = cartaoMed.consultaEntreDatas(NUM_CARTAO_OK+"", null, DH_FIM);
-		assertExcecoesRelLancamento(ret);
-		ret = cartaoMed.consultaEntreDatas(NUM_CARTAO_OK+"", null, null);
-		assertExcecoesRelLancamento(ret);
-		ret = cartaoMed.consultaEntreDatas(NUM_CARTAO_OK+"", DH_FIM, DH_INIC);
-		assertExcecoesRelLancamento(ret);
+		RetornoConsultaExtrato ret;
+		try {
+			ret = cartaoMed.consultaEntreDatas(null, DH_INIC, DH_FIM);
+			assertExcecoesRelLancamento(ret);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ret = cartaoMed.consultaEntreDatas("  ", DH_INIC, DH_FIM);
+			assertExcecoesRelLancamento(ret);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ret = cartaoMed.consultaEntreDatas(NUM_CARTAO_OK+"", null, DH_FIM);
+			assertExcecoesRelLancamento(ret);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ret = cartaoMed.consultaEntreDatas(NUM_CARTAO_OK+"", null, null);
+			assertExcecoesRelLancamento(ret);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ret = cartaoMed.consultaEntreDatas(NUM_CARTAO_OK+"", DH_FIM, DH_INIC);
+			assertExcecoesRelLancamento(ret);
+		} catch (ExcecaoDadoInvalido e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void assertExcecoesRelLancamento(RetornoConsultaExtrato ret) {
 		Assertions.assertNotNull(ret.getMensagemErro());

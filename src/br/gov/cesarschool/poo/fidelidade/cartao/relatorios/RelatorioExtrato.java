@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-import br.gov.cesarschool.fidelidade.geral.excecoes.ExcecaoDadoInvalido;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtrato;
 import br.gov.cesarschool.poo.fidelidade.cartao.entidade.RetornoConsultaExtrato;
 import br.gov.cesarschool.poo.fidelidade.cartao.negocio.CartaoFidelidadeMediator;
+import br.gov.cesarschool.poo.fidelidade.excecoes.ExcecaoDadoInvalido;
 
 public class RelatorioExtrato {
 	private static CartaoFidelidadeMediator mediator = CartaoFidelidadeMediator.getInstance();
@@ -58,8 +58,7 @@ public class RelatorioExtrato {
 		try {
 			gerarRelatorioExtratos(numeroCartao, inicio, fim);
 		} catch (ExcecaoDadoInvalido e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }

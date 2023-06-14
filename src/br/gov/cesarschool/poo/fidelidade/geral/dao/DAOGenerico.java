@@ -22,7 +22,7 @@ public class DAOGenerico {
 		}
 	}
 	private File getArquivo(String chave) {
-		String nomeArq = chave + EXT;
+		String nomeArq = diretorioBase + chave + EXT;
 		return new File(nomeArq);		
 	}
 	
@@ -92,25 +92,45 @@ public class DAOGenerico {
 	
 	public Identificavel[] buscarTodos() {
 			File folder = new File(diretorioBase);
-			File[] files = folder.listFiles(); 
-			Identificavel[] result = new Identificavel[files.length];
-			int cont = 0;
+			if(!folder.exists()) {
+				return null;
+			}
 			FileInputStream fis = null; 
 			ObjectInputStream ois = null;
-			for(int i = 0 ; i < files.length ; i ++) {
-				File file = files[i];
-				if(file.isFile()) { 
-					try {
-					fis = new FileInputStream(file);
-					ois = new ObjectInputStream(fis);
-					result[cont] = (Identificavel)ois.readObject();
-					cont++;
-					} catch (Exception e) {
-						throw new RuntimeException("Erro ao ler");
+			try {
+				File[] files = folder.listFiles(); 
+				if(files.length == 0) {
+					return new Identificavel[0];
+				}
+				Identificavel[] result = new Identificavel[files.length];
+				int cont = 0;
+				for(int i = 0 ; i < files.length ; i ++) {
+					File file = files[i];
+					if(file.isFile()) { 
+							fis = new FileInputStream(file);
+							ois = new ObjectInputStream(fis);
+							result[cont] = (Identificavel)ois.readObject();
+							cont++;
 					}
 				}
+				Identificavel[] res = new Identificavel[cont-1];
+				for(int j = 0 ; j < cont-1 ; j ++) {
+					res[j] = result[j];
+				}
+				return res;
+			} catch (Exception e) {
+				throw new RuntimeException("Erro ao ler");
+			} finally {
+				try {
+					ois.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}try {
+					fis.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
-			return result;
 		}
 	}
 

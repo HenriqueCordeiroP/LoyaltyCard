@@ -4,7 +4,6 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +70,7 @@ public class TesteDAOGenerico {
 		c1.creditar(100);
 		c1.debitar(60);
 		CartaoFidelidadeDAO daoCart = new CartaoFidelidadeDAO();
-		boolean res = daoCart.incluir(c1);		
+		boolean res = daoCart.incluir(c1);	
 		Assertions.assertTrue(res);		
 		CartaoFidelidade c2 = daoCart.buscar(NUMERO_CARTAO+"");
 		Assertions.assertNotNull(c2);

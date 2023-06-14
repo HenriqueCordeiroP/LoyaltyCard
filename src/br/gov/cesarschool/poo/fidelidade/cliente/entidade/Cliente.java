@@ -9,13 +9,11 @@ import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Sexo;
 import lombok.ToString;
 
-@ToString
+@ToString(exclude = "dataDeNascimento")
 public class Cliente extends Identificavel implements Comparavel { 
 	private String cpf;
 	private String nomeCompleto;		
 	private Sexo sexo;
-	
-	@ToString.Exclude
 	private Date dataDeNascimento;
 	private double renda;
 	private Endereco endereco;

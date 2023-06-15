@@ -6,13 +6,13 @@ import br.gov.cesarschool.poo.fidelidade.cartao.entidade.LancamentoExtratoResgat
 import br.gov.cesarschool.poo.fidelidade.geral.dao.DAOGenerico;
 
 public class LancamentoExtratoDAO {
-	private DAOGenerico daoEncapsulado;
+	private DAOGenerico<LancamentoExtrato> daoEncapsulado;
 	private static final String FILE_SEP = System.getProperty("file.separator");
 	private static final String DIR_BASE = "." + FILE_SEP + "fidelidade" + FILE_SEP 
 			+ "lancamento" + FILE_SEP;
 	
 	public LancamentoExtratoDAO() {
-		daoEncapsulado = new DAOGenerico(DIR_BASE);
+		daoEncapsulado = new DAOGenerico<LancamentoExtrato>(DIR_BASE);
 	}
 	
 	public boolean incluir(LancamentoExtratoPontuacao credito) {
@@ -27,6 +27,6 @@ public class LancamentoExtratoDAO {
 	
 	
 	public LancamentoExtrato[] buscarTodos() {
-		return (LancamentoExtrato[]) daoEncapsulado.buscarTodos();
+		return daoEncapsulado.buscarTodos();
 	}
 }

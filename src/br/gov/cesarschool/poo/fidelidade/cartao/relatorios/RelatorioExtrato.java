@@ -15,7 +15,7 @@ public class RelatorioExtrato {
 	
 	private static final Scanner ENTRADA = new Scanner(System.in);
 	
-	public static void gerarRelatorioExtratos(long numeroCartao, LocalDateTime inicio, LocalDateTime fim) {
+	public static void gerarRelatorioExtratos(long numeroCartao, LocalDateTime inicio, LocalDateTime fim){
 		try {			
 			RetornoConsultaExtrato consulta = mediator.consultaEntreDatas(Long.toString(numeroCartao), inicio, fim);
 			LancamentoExtrato[] extratos = consulta.getLancamentos();

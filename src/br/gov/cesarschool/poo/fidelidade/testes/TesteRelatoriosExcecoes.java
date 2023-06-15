@@ -66,7 +66,8 @@ public class TesteRelatoriosExcecoes {
 			res = daoCli.incluir(cliente);
 			Assertions.assertTrue(res);
 		}
-		RelatorioCliente.gerarRelatorioClientes();				
+		RelatorioCliente.gerarRelatorioClientes();	
+		System.out.println(meuPs.getText());
 		Assertions.assertEquals(meuPs.getText(), OUT_REL_CLI);		
 	}
 	@Test

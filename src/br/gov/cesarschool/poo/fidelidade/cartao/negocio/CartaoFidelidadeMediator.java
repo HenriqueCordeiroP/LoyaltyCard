@@ -120,7 +120,7 @@ public class CartaoFidelidadeMediator {
 			//return new RetornoConsultaExtrato(null, "Data de início inválida");
 			throw new ExcecaoDadoInvalido("Data de início inválida");
 		}
-		else if(!fim.isAfter(inicio)) {
+		else if(fim != null && !fim.isAfter(inicio)) {
 			//return new RetornoConsultaExtrato(null, "Data de fim inválida");
 			throw new ExcecaoDadoInvalido("Data de fim inválida");
 		}

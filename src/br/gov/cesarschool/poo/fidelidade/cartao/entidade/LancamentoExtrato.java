@@ -2,6 +2,7 @@ package br.gov.cesarschool.poo.fidelidade.cartao.entidade;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Comparavel;
 import br.gov.cesarschool.poo.fidelidade.geral.entidade.Identificavel;
@@ -32,7 +33,8 @@ public abstract class LancamentoExtrato extends Identificavel implements Seriali
 	}
 	
 	public String obterChave() {
-		return "" + numeroCartao;
+		String formatted = dataHoraLancamento.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSSS"));
+		return getIdentificadorTipo() + numeroCartao + formatted;
 	}
 	
 	public int comparar(Comparavel comp) {

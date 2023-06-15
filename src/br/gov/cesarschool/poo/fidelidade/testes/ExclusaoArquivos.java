@@ -16,10 +16,10 @@ public class ExclusaoArquivos {
 		deleteDir(DIR_BASE_CLI, "clientes");
 	}
 	private static void deleteCartoes() {
-		deleteDir(DIR_BASE_CARTAO, "cartões");
+		deleteDir(DIR_BASE_CARTAO, "cartï¿½es");
 	}
 	private static void deleteLancamentos() {
-		deleteDir(DIR_BASE_LANCAMENTO, "lançamentos");
+		deleteDir(DIR_BASE_LANCAMENTO, "lanï¿½amentos");
 	}
 	
 	private static void deleteDir(String diretorio, String entidade) {
@@ -30,7 +30,7 @@ public class ExclusaoArquivos {
 			for (File file : arqs) {
 				res = file.delete();
 				if (!res) {
-					System.out.println("Nem todos os arquivos de "+ entidade + " foram apagados para execução dos testes de relatório.");
+					System.out.println("Nem todos os arquivos de "+ entidade + " foram apagados para execuï¿½ï¿½o dos testes de relatï¿½rio.");
 					System.out.println("Apague os arquivos pelo sistema de arquivos!");
 					System.exit(1);
 				}

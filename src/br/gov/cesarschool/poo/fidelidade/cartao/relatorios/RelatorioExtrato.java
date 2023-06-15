@@ -15,21 +15,21 @@ public class RelatorioExtrato {
 	
 	private static final Scanner ENTRADA = new Scanner(System.in);
 	
-	public static void gerarRelatorioExtratos(long numeroCartao, LocalDateTime inicio, LocalDateTime fim) throws ExcecaoDadoInvalido {
-		RetornoConsultaExtrato consulta = mediator.consultaEntreDatas(Long.toString(numeroCartao), inicio, fim);
-		LancamentoExtrato[] extratos = consulta.getLancamentos();
-		DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
-		decimalFormat.setMinimumFractionDigits(2);
-		for(LancamentoExtrato extrato : extratos) {
-			try {
-				LocalDateTime dataHora = extrato.getDataHoraLancamento();
-				String data = getFormattedDateFromLocalDateTime(dataHora);
-				String time = getFormattedTimeFromLocalDateTime(dataHora);
-				String formattedValor = decimalFormat.format(extrato.getQuantidadePontos());
-				System.out.println(data +  time + " - " + formattedValor + " - " + extrato.getIdentificadorTipo());
-			}catch(Exception e) {
-				System.out.println(e.getMessage());
+	public static void gerarRelatorioExtratos(long numeroCartao, LocalDateTime inicio, LocalDateTime fim) {
+		try {			
+			RetornoConsultaExtrato consulta = mediator.consultaEntreDatas(Long.toString(numeroCartao), inicio, fim);
+			LancamentoExtrato[] extratos = consulta.getLancamentos();
+			DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+			decimalFormat.setMinimumFractionDigits(2);
+			for(LancamentoExtrato extrato : extratos) {
+					LocalDateTime dataHora = extrato.getDataHoraLancamento();
+					String data = getFormattedDateFromLocalDateTime(dataHora);
+					String time = getFormattedTimeFromLocalDateTime(dataHora);
+					String formattedValor = decimalFormat.format(extrato.getQuantidadePontos());
+					System.out.println(data +  time + " - " + formattedValor + " - " + extrato.getIdentificadorTipo());
 			}
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -54,11 +54,6 @@ public class RelatorioExtrato {
 		
 		String dataFim = ENTRADA.nextLine();
 		LocalDateTime fim = LocalDateTime.parse(dataFim, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-		
-		try {
-			gerarRelatorioExtratos(numeroCartao, inicio, fim);
-		} catch (ExcecaoDadoInvalido e) {
-			System.out.println(e.getMessage());
-		}
+		gerarRelatorioExtratos(numeroCartao, inicio, fim);
 	}
 }

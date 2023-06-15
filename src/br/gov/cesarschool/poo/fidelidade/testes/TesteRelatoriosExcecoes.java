@@ -58,7 +58,7 @@ public class TesteRelatoriosExcecoes {
 	}
 	@Test
 	public void testarRelatorioClientes() {		
-		outDoSystem.println("################# Testando Relat�rio de clientes ################# ");
+		outDoSystem.println("################# Testando Relatório de clientes ################# ");
 		Cliente[] clientes = obterClientes();
 		ClienteDAO daoCli = new ClienteDAO();
 		boolean res = false;
@@ -71,26 +71,17 @@ public class TesteRelatoriosExcecoes {
 	}
 	@Test
 	public void testarRelatorioLancamentos() {	
-		outDoSystem.println("################# Testando Relat�rio de lan�amentos ################# ");
+		outDoSystem.println("################# Testando Relatório de lançamentos ################# ");
 		LancamentoExtrato[] lancamentos = obterLancamentos();
 		LancamentoExtratoDAO lancDao = new LancamentoExtratoDAO();
 		CartaoFidelidadeMediator cartaoMed = CartaoFidelidadeMediator.getInstance();
 		boolean res = false;
 		for (LancamentoExtrato lancamentoExtrato : lancamentos) {
 			res = lancDao.incluir(lancamentoExtrato);
-			System.out.println(res);
 			Assertions.assertTrue(res);
 		}
-		try {
-			RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_OK, DH_INIC, DH_FIM);
-		} catch (ExcecaoDadoInvalido e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_2, DH_INIC, null);
-		} catch (ExcecaoDadoInvalido e) {
-			System.out.println(e.getMessage());
-		}		
+		RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_OK, DH_INIC, DH_FIM);
+		RelatorioExtrato.gerarRelatorioExtratos(NUM_CARTAO_2, DH_INIC, null);		
 		Assertions.assertEquals(meuPs.getText(), OUT_REL_LAN);
 		assertFluxosExcepcionais(cartaoMed, null, DH_INIC, DH_FIM);
 		assertFluxosExcepcionais(cartaoMed, "  ", DH_INIC, DH_FIM);
